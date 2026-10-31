@@ -1,0 +1,19 @@
+name: agent-test-trigger
+on:
+  workflow_dispatch:
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const body = '@mqdnd2077-art Please fix the README.md sentence: replace `Test repository for the dsh-superagent prototype.` with `Test repository for dsh-superagent.` Keep everything else unchanged.';
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: 1,
+              body
+            });
